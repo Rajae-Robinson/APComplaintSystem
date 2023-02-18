@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.Color;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -13,6 +11,5 @@ public class DefaultFrame extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		ImageIcon logo = new ImageIcon("../img/logo.png");
 		this.setIconImage(logo.getImage());
-		this.getContentPane().setBackground(Color.LIGHT_GRAY);
 	}
 }

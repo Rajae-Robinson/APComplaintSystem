@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -33,7 +34,8 @@ public class Login {
         JTextField idField = new JTextField(7);
         JLabel passwordLabel = new JLabel("Password:");
         JPasswordField passwordField = new JPasswordField(20); // 20 is the number of columns in the password field
-
+        
+        JButton loginButton = new JButton("Login");
         
 		loginFrame.add(heading);
         loginFrame.add(studentButton);
@@ -42,6 +44,7 @@ public class Login {
         loginFrame.add(idField);
         loginFrame.add(passwordLabel);
         loginFrame.add(passwordField);
+        loginFrame.add(loginButton);
 		loginFrame.setVisible(true);
 	}
 	
