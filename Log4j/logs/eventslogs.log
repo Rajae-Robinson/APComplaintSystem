@@ -1,0 +1,6 @@
+[INFO ] 2023-02-23 16:00:15.855 [main] LoggingExample - Info
+[DEBUG] 2023-02-23 16:00:15.858 [main] LoggingExample - bug
+[ERROR] 2023-02-23 16:00:15.858 [main] LoggingExample - error
+[TRACE] 2023-02-23 16:00:15.858 [main] LoggingExample - trace
+[FATAL] 2023-02-23 16:00:15.858 [main] LoggingExample - fatal
+[WARN ] 2023-02-23 16:00:15.858 [main] LoggingExample - warning
