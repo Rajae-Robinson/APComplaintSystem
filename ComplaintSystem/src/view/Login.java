@@ -1,49 +1,38 @@
 package view;
 
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class Login {
+public class Login implements ActionListener {
+	private JFrame loginFrame = new DefaultFrame();
+	private JButton loginButton;
+	private JTextField idField;
+	private JPasswordField passwordField;
+	
 	public Login() {
-		JFrame loginFrame = new DefaultFrame();
 		loginFrame.setLayout(new GridBagLayout());
 		
-		ImageIcon logo = new ImageIcon("../img/logo.png");
-		JLabel heading = new JLabel("Complaint & Query System");
-		heading.setIcon(logo);
-//		heading.setHorizontalTextPosition(JLabel.CENTER);
-//        heading.setVerticalTextPosition(JLabel.BOTTOM);
+		JLabel heading = new JLabel("Student Complaint & Query System");
         
-        
-        
-     // Create the radio buttons and add them to a button group
-        JRadioButton studentButton = new JRadioButton("Student");
-        JRadioButton staffButton = new JRadioButton("Staff");
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(studentButton);
-        buttonGroup.add(staffButton);
-        JPanel radioBtns = new JPanel();
-        radioBtns.setLayout(new FlowLayout());
         
         // Create the input fields and their labels
         JLabel idLabel = new JLabel("ID:");
-        JTextField idField = new JTextField(7);
+        idField = new JTextField(7);
         JLabel passwordLabel = new JLabel("Password:");
-        JPasswordField passwordField = new JPasswordField(20); // 20 is the number of columns in the password field
+        passwordField = new JPasswordField(20); // 20 is the number of columns in the password field
         
-        JButton loginButton = new JButton("Login");
+        loginButton = new JButton("Login");
+        loginButton.addActionListener(this);
         
         GridBagConstraints gc = new GridBagConstraints();
         gc.gridx = 1;
@@ -55,9 +44,6 @@ public class Login {
         gc.gridx = 1;
         gc.gridy = 1;
         gc.insets = new Insets(0, 0, 10, 0);
-        radioBtns.add(studentButton);
-        radioBtns.add(staffButton);
-        loginFrame.add(radioBtns, gc);
         
         gc.gridx = 0;
         gc.gridy = 2;
@@ -82,6 +68,23 @@ public class Login {
         loginFrame.add(loginButton, gc);
         
 		loginFrame.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		 // Handle login button click event
+	      if (e.getSource() == loginButton) {
+	         String id = idField.getText();
+	         char[] passwordChars = passwordField.getPassword();
+	         String password = new String(passwordChars);
+
+	         // Check id and password here in database here
+	         // ...
+
+	         // Display message
+	         JOptionPane.showMessageDialog(loginFrame, "Login successful");
+	         // Navigate to dashboard screen
+	      }
 	}
 	
 }

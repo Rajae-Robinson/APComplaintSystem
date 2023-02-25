@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 
 public class DefaultFrame extends JFrame {
 	public DefaultFrame() {
-		this.setTitle("UTECH Complaint & Query System");
+		this.setTitle("UTECH Complaint & Query System - STUDENT");
 		this.setSize(1024, 768);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
