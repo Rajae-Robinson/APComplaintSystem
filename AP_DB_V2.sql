@@ -129,5 +129,3 @@ SELECT
 	Q.studentID, CONCAT(a.firstName, ' ', a.lastName) AS advisorName, Q.category,Q.details, Q.response, Q.responseDATE
 FROM Queries Q
 INNER JOIN Advisor a ON Q.responderID = a.advisorID;
-
-Select * from Students;
