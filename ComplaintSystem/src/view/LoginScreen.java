@@ -13,13 +13,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class Login implements ActionListener {
+import org.hibernate.HibernateException;
+
+import model.Login;
+
+public class LoginScreen implements ActionListener {
 	private JFrame loginFrame = new DefaultFrame();
 	private JButton loginButton;
 	private JTextField idField;
 	private JPasswordField passwordField;
 	
-	public Login() {
+	public LoginScreen() {
 		loginFrame.setLayout(new GridBagLayout());
 		
 		JLabel heading = new JLabel("Student Complaint & Query System");
@@ -74,16 +78,33 @@ public class Login implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		 // Handle login button click event
 	      if (e.getSource() == loginButton) {
-	         String id = idField.getText();
+	         int id = Integer.parseInt(idField.getText());
 	         char[] passwordChars = passwordField.getPassword();
 	         String password = new String(passwordChars);
 
-	         // Check id and password here in database here
-	         // ...
+	         // Authenticate user
+	         boolean isAuthenticated = false;
+	         Login login = new Login(id, password);
+	         try {
+	             isAuthenticated = login.authenticate();
+	         } catch (HibernateException ex) {
+	             JOptionPane.showMessageDialog(loginFrame, ex.getMessage());
+	             return;
+	         }
 
-	         // Display message
-	         JOptionPane.showMessageDialog(loginFrame, "Login successful");
-	         // Navigate to dashboard screen
+	         // Check if authentication succeeded
+	         if (isAuthenticated) {
+	             JOptionPane.showMessageDialog(loginFrame, "Login successful");
+	             // TODO: change to dashboard screen
+	             PastQueries pastQuery = new PastQueries();
+//	             DashboardScreen dashboard = new DashboardScreen();
+	             
+	             // TODO: change to dashboard screen
+	             pastQuery.getPastQueriesFrame().setVisible(true);;
+	             loginFrame.dispose(); // Close the login frame
+	         } else {
+	             JOptionPane.showMessageDialog(loginFrame, "Invalid id or password");
+	         }
 	      }
 	}
 	

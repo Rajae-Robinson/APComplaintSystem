@@ -39,5 +39,8 @@ public class PastQueries {
 		pastQueriesFrame.add(table, gbc);
 		pastQueriesFrame.setVisible(true);
 	}
-
+	
+	public JFrame getPastQueriesFrame() {
+		return pastQueriesFrame;
+	}
 }

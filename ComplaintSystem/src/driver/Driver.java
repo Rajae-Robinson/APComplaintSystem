@@ -1,6 +1,6 @@
 package driver;
 
-import view.Login;
+import view.LoginScreen;
 
 /**
  * AP Group Programming Project - UTECH Complaint/Query System
@@ -11,7 +11,7 @@ import view.Login;
 public class Driver {
 
 	public static void main(String[] args) {
-		new Login();
+		new LoginScreen();
 	}
 
 }
