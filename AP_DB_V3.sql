@@ -57,9 +57,9 @@ CREATE TABLE Queries(
     CONSTRAINT fk_advid2 FOREIGN KEY (responderID) REFERENCES Advisor(advisorID)
     );
     
-    CREATE TABLE Authentication(
-		userID int NOT NULL,
-        userPass varchar(500) NOT NULL,
+    CREATE TABLE Login(
+		id int NOT NULL,
+        password varchar(500) NOT NULL,
         PRIMARY KEY (userID)
     );
     
