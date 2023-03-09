@@ -95,12 +95,7 @@ public class LoginScreen implements ActionListener {
 	         // Check if authentication succeeded
 	         if (isAuthenticated) {
 	             JOptionPane.showMessageDialog(loginFrame, "Login successful");
-	             // TODO: change to dashboard screen
-	             PastQueries pastQuery = new PastQueries();
-//	             DashboardScreen dashboard = new DashboardScreen();
-	             
-	             // TODO: change to dashboard screen
-	             pastQuery.getPastQueriesFrame().setVisible(true);;
+	             new DashboardScreen();
 	             loginFrame.dispose(); // Close the login frame
 	         } else {
 	             JOptionPane.showMessageDialog(loginFrame, "Invalid id or password");
