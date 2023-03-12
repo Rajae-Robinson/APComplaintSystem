@@ -29,9 +29,9 @@ CREATE TABLE Advisor (
     supervisorID INT NOT NULL,
     PRIMARY KEY (advisorID),
     CONSTRAINT fk_sup FOREIGN KEY (supervisorID) REFERENCES Supervisor(supervisorID)
-    );
+);
 
-CREATE TABLE Complaint(
+CREATE TABLE Complaint (
 	complaintID int NOT NULL AUTO_INCREMENT,
     studentID int NOT NULL,
     category Varchar(50) NOT NULL,
@@ -42,9 +42,9 @@ CREATE TABLE Complaint(
     PRIMARY KEY (complaintID),
     CONSTRAINT fk_sid FOREIGN KEY (studentID) REFERENCES Students(studentID),
     CONSTRAINT fk_advid FOREIGN KEY (responderID) REFERENCES Advisor(advisorID)
-    );
+);
     
-CREATE TABLE Queries(
+CREATE TABLE Query (
 	queryID int NOT NULL AUTO_INCREMENT,
     studentID int NOT NULL,
     category Varchar(50) NOT NULL,
@@ -55,26 +55,26 @@ CREATE TABLE Queries(
     PRIMARY KEY (queryID),
     CONSTRAINT fk_stuid2 FOREIGN KEY (studentID) REFERENCES Students(studentID),
     CONSTRAINT fk_advid2 FOREIGN KEY (responderID) REFERENCES Advisor(advisorID)
-    );
+);
     
-    CREATE TABLE Login(
-		id int NOT NULL,
-        password varchar(500) NOT NULL,
-        PRIMARY KEY (userID)
-    );
+CREATE TABLE Login (
+    id int NOT NULL,
+    password varchar(500) NOT NULL,
+    PRIMARY KEY (id)
+);
     
-    /*input id, input password... check if input id matches an ID in the database, then 
-    check if password at same record matches input password*/
-    
-    CREATE TABLE Auditing(
-	loginID int not null auto_increment,
-    userName varchar (50) not null,
-    loginTime datetime not null,
-    logoutTime datetime not null,
-    duration time,
-    activity varchar(100) not null,
-    PRIMARY KEY (loginID)
-    );
+/*input id, input password... check if input id matches an ID in the database, then 
+check if password at same record matches input password*/
+
+CREATE TABLE Auditing(
+loginID int not null auto_increment,
+userName varchar (50) not null,
+loginTime datetime not null,
+logoutTime datetime not null,
+duration time,
+activity varchar(100) not null,
+PRIMARY KEY (loginID)
+);
 
 INSERT INTO Students (studentID, firstName, lastName, email, contactNumber) VALUES
 	(1901709, 'Odane','Walters','odanewalters01@gmail.com','282-0763');
@@ -85,16 +85,16 @@ INSERT INTO Supervisor (supervisorID, firstName, lastName, email, contactNumber)
 INSERT INTO Advisor (advisorID, firstName, lastName, email, contactNumber, supervisorID) VALUES
 	(1801609, 'Owen','Lewis','owenlewis01@gmail.com','282-0763', 1991709);
     
-INSERT INTO Authentication (userID, userPass) VALUES
-		(1901709, SHA2('password123', 256)),
-        (1991709, SHA2('password123', 256)),
-        (1801609, SHA2('password123', 256));
+INSERT INTO Login (id, password) VALUES
+		(1901709, 'password123'),
+        (1991709, 'password123'),
+        (1801609, 'password123');
  
- INSERT INTO Complaint (complaintID, studentID, category, details, responseDate, responderID, response) VALUES
-	(1, 1901709, 'Missing grades','My grades are missing for Math.', '2022-01-01', 1801609, 'We are working on it.');
- 
- INSERT INTO Queries (queryID, studentID, category, details, responseDate, responderID, response) VALUES
-	(1, 1901709, 'How to drop a module?', 'I started a module late and I want to drop it. ', '2022-06-01', 1801609,'Visit our website to do so.');
+INSERT INTO Complaint (complaintID, studentID, category, details, responseDate, responderID, response) VALUES
+(1, 1901709, 'Missing grades','My grades are missing for Math.', '2022-01-01', 1801609, 'We are working on it.');
+
+INSERT INTO Query (queryID, studentID, category, details, responseDate, responderID, response) VALUES
+(1, 1901709, 'How to drop a module?', 'I started a module late and I want to drop it. ', '2022-06-01', 1801609,'Visit our website to do so.');
 
 /*CREATE VIEW StudentQueriesAndComplaintsnew AS
 SELECT
@@ -117,14 +117,14 @@ INNER JOIN Advisor a ON C.responderID = a.advisorID;
 CREATE VIEW QueriesViews AS
 SELECT 
 	Q.studentID, CONCAT(a.firstName, ' ', a.lastName) AS advisorName, Q.category,Q.details, Q.response, Q.responseDATE
-FROM Queries Q
+FROM Query Q
 INNER JOIN Advisor a ON Q.responderID = a.advisorID;
 
 Select * from Students;
-Select * from Authentication;
+Select * from Login;
 Select * from Advisor;
 Select * from Supervisor;
 Select * from Complaint;
-Select * from Queries;
+Select * from Query;
 Select * from ComplaintsViews;
 Select * from QueriesViews;

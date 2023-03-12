@@ -4,39 +4,78 @@ package view;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.Date;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import model.Complaint;
+import model.Query;
+
 public class PastQueries {
-	private JFrame pastQueriesFrame = new DefaultFrame();
+	private JPanel pastQueriesFrame = new JPanel();
 	
 	public PastQueries() {
 		pastQueriesFrame.setLayout(new GridBagLayout());
-		String[] columnNames = {"Type", "ID", "Advisor", "Last Response Date"};
-		Object[][] data = {
-		    {"Complaint", 2530, "John", "Sept."},
-		    {"Query", 3078, "Mary", "Nov"},
-		};
+		JLabel queryHeading = new JLabel("Past Queries");
+		
+		JTable queryTable = new JTable();
+		DefaultTableModel queryTableModel = new DefaultTableModel(
+		        new Object[][]{},
+		        new String[]{"Type", "ID", "Advisor", "Last Response Date"}
+		);
+		queryTable.setModel(queryTableModel);
+		
+		for (Query query : new Query().readAll()) {
+		    String type = "Query";
+		    int id = query.getQueryID();
+		    int advisor = 0;
+		    if(query.getResponderID() != null) {
+		    	advisor = query.getResponderID();
+		    }
+		    Date lastResponseDate = query.getResponseDate();
+		    queryTableModel.addRow(new Object[]{type, id, advisor, lastResponseDate});
+		}
+		queryTable.setEnabled(false);
+		queryTable.setCellSelectionEnabled(false);
+		queryTable.setPreferredScrollableViewportSize(new Dimension(450, 200));
+		
+		JLabel complaintsHeading = new JLabel("Past Complaints");
+		
+		JTable complaintTable = new JTable();
+		DefaultTableModel complaintTableModel = new DefaultTableModel(
+		        new Object[][]{},
+		        new String[]{"Type", "ID", "Advisor", "Last Response Date"}
+		);
+		complaintTable.setModel(complaintTableModel);
 
-		DefaultTableModel model = new DefaultTableModel(data, columnNames);
-		JTable table = new JTable(model);
-		table.setEnabled(false);
-		table.setCellSelectionEnabled(false);
-		table.setPreferredScrollableViewportSize(new Dimension(450, 200));
-
-		JLabel heading = new JLabel("Past Queries");
+		for (Complaint complaint : new Complaint().readAll()) {
+		    String type = "Complaint";
+		    int id = complaint.getComplaintID();
+		    int advisor = 0;
+		    if(complaint.getResponderID() != null) {
+		    	advisor = complaint.getResponderID();
+		    }
+		    Date lastResponseDate = complaint.getResponseDate();
+		    complaintTableModel.addRow(new Object[]{type, id, advisor, lastResponseDate});
+		}
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.NORTH;
-		pastQueriesFrame.add(heading, gbc);
+		pastQueriesFrame.add(queryHeading, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		pastQueriesFrame.add(table, gbc);
+		pastQueriesFrame.add(queryTable, gbc);
+		pastQueriesFrame.add(complaintsHeading);
+		pastQueriesFrame.add(complaintTable);
 		pastQueriesFrame.setVisible(true);
+	}
+
+	public JPanel getPastQueriesFrame() {
+		return pastQueriesFrame;
 	}
 }

@@ -42,7 +42,8 @@ public class DashboardScreen implements ActionListener {
 
         liveVidPanel = new JPanel();
         liveVidPanel.add(new JLabel("Start a live video call"));
-
+        
+        // Buttons
         lodgeComplaintBtn = new JButton("Lodge a Complaint");
         lodgeComplaintBtn.addActionListener(this);
 
@@ -59,6 +60,7 @@ public class DashboardScreen implements ActionListener {
         liveVideoBtn.addActionListener(this);
         
 
+        // Add Buttons to option panel
         optPanel.add(lodgeComplaintBtn);
         optPanel.add(viewPastComplaintBtn);
         optPanel.add(complaintStatusBtn);
@@ -85,6 +87,8 @@ public class DashboardScreen implements ActionListener {
             cl.show(selectedOptionPanel, "complaint");
         } else if (e.getSource() == viewPastComplaintBtn) {
             cl.show(selectedOptionPanel, "pastcomplaint");
+            PastQueries pq = new PastQueries();
+            selectedOptionPanel.add(pq.getPastQueriesFrame());
         } else if (e.getSource() == complaintStatusBtn) {
             cl.show(selectedOptionPanel, "complaintstatus");
         } else if (e.getSource() == fqaBtn) {
