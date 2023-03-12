@@ -32,7 +32,8 @@ public class DashboardScreen implements ActionListener {
         complaintPanel.add(new JLabel("Lodge a complaint"));
 
         pastComplaintPanel = new JPanel();
-        pastComplaintPanel.add(new JLabel("View past complaints"));
+        PastQueries pq = new PastQueries();
+        pastComplaintPanel.add(pq.getPastQueriesPanel());
 
         complaintStatPanel = new JPanel();
         complaintStatPanel.add(new JLabel("Check complaint status"));
@@ -87,8 +88,6 @@ public class DashboardScreen implements ActionListener {
             cl.show(selectedOptionPanel, "complaint");
         } else if (e.getSource() == viewPastComplaintBtn) {
             cl.show(selectedOptionPanel, "pastcomplaint");
-            PastQueries pq = new PastQueries();
-            selectedOptionPanel.add(pq.getPastQueriesFrame());
         } else if (e.getSource() == complaintStatusBtn) {
             cl.show(selectedOptionPanel, "complaintstatus");
         } else if (e.getSource() == fqaBtn) {

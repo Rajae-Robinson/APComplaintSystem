@@ -15,10 +15,10 @@ import model.Complaint;
 import model.Query;
 
 public class PastQueries {
-	private JPanel pastQueriesFrame = new JPanel();
+	private JPanel pastQueriesPanel = new JPanel();
 	
 	public PastQueries() {
-		pastQueriesFrame.setLayout(new GridBagLayout());
+		pastQueriesPanel.setLayout(new GridBagLayout());
 		JLabel queryHeading = new JLabel("Past Queries");
 		
 		JTable queryTable = new JTable();
@@ -66,16 +66,16 @@ public class PastQueries {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.NORTH;
-		pastQueriesFrame.add(queryHeading, gbc);
+		pastQueriesPanel.add(queryHeading, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		pastQueriesFrame.add(queryTable, gbc);
-		pastQueriesFrame.add(complaintsHeading);
-		pastQueriesFrame.add(complaintTable);
-		pastQueriesFrame.setVisible(true);
+		pastQueriesPanel.add(queryTable, gbc);
+		pastQueriesPanel.add(complaintsHeading);
+		pastQueriesPanel.add(complaintTable);
+		pastQueriesPanel.setVisible(true);
 	}
 
-	public JPanel getPastQueriesFrame() {
-		return pastQueriesFrame;
+	public JPanel getPastQueriesPanel() {
+		return pastQueriesPanel;
 	}
 }
