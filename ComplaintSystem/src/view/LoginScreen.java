@@ -95,8 +95,7 @@ public class LoginScreen implements ActionListener {
 	         // Check if authentication succeeded
 	         if (isAuthenticated) {
 	             JOptionPane.showMessageDialog(loginFrame, "Login successful");
-//	             new DashboardScreen();
-	             new StudentDashboard();
+	             StudentDashboard.main(null);;
 	             loginFrame.dispose(); // Close the login frame
 	         } else {
 	             JOptionPane.showMessageDialog(loginFrame, "Invalid id or password");
