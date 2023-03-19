@@ -2,47 +2,16 @@ package model;
 
 import java.util.Date;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-
-import controller.SessionFactoryBuilder;
-
-@Entity
-@Table(name = "complaint")
 public class Complaint implements Serializable {
 	private static final long serialVersionUID = -8928497947145342486L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "complaintID")
 	private int complaintID;
-	
-	@Column(name = "studentID")
     private int studentID;
-	
-	@Column(name = "category")
     private String category;
-	
-	@Column(name = "details")
     private String details;
-	
-	@Column(name = "responseDate")
     private Date responseDate;
-	
-	@Column(name = "responderID")
     private Integer responderID;
-	
-	@Column(name = "response")
     private String response;
     
     public Complaint() {
@@ -58,67 +27,6 @@ public class Complaint implements Serializable {
 		this.category = category;
 		this.details = details;
 	}
-
-	public void createComplaint() {
-		Session session = null;
-		try {
-			session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-			session.beginTransaction();
-	        session.save(this);
-	        session.getTransaction().commit();
-	    } catch (Exception e) {
-	        if (session.getTransaction() != null) {
-	        	session.getTransaction().rollback();
-	        }
-	        e.printStackTrace();
-	    } finally {
-	        if (session != null) {
-	            session.close();
-	        }
-	    }
-    }
-
-    public List<Complaint> readAll() throws HibernateException {
-		List<Complaint> complaints = new ArrayList<>();
-		Session session = null;
-		
-		try {
-            session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-            complaints = session.createQuery("from Complaint", Complaint.class).getResultList();
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            if (session != null && session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-            throw e;
-        }
-		
-		return complaints;
-	}
-    
-    public void deleteComplaint(int complaintID) {
-    	Session session = null;
-
-        try {
-        	session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-
-            Complaint query = session.get(Complaint.class, complaintID);
-            session.delete(query);
-
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
 
 	public int getComplaintID() {
 		return complaintID;

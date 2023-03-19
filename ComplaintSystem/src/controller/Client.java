@@ -6,8 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import model.Complaint;
 import model.Query;
 import model.Student;
@@ -57,15 +55,17 @@ public class Client {
 		this.action = action;
 		try {
 			objOS.writeObject(action);
+			objOS.flush();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void sendID(String id) {
-		this.action = action;
+		this.action = id;
 		try {
-			objOS.writeObject(action);
+			objOS.writeObject(id);
+			objOS.flush();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -78,31 +78,42 @@ public class Client {
 	    objOS.flush();
 	}
 	
-	public <T> T receiveResponse(Class<T> clazz) {
+	public boolean receiveAuthResp() {
+		boolean authenticated = false;
 		try {
-			switch (action) {
-			case "authenticate":
-				return clazz.cast(objIS.readObject());
-            case "findComplaint":
-                return clazz.cast(objIS.readObject());
-            case "findQuery":
-                return clazz.cast(objIS.readObject());
-            case "deleteComplaint":
-                return clazz.cast(objIS.readObject());
-            case "deleteQuery":
-                return clazz.cast(objIS.readObject());
-            default:
-                System.err.println("Unknown action: " + action);
-                break;
-			}	
-		} catch(ClassCastException ex) {
-			ex.printStackTrace();
-		} catch(ClassNotFoundException ex) {
-			ex.printStackTrace();
-		} catch(IOException ex) {
-			ex.printStackTrace();
+			authenticated = (boolean) objIS.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return null;
+		return authenticated;
+	}
+	
+	public Query receiveQuery() {
+		Query query = new Query();
+		try {
+			query = (Query) objIS.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return query;
+	}
+	
+	public Complaint receiveComplaint() {
+		Complaint complaint = new Complaint();
+		try {
+			complaint = (Complaint) objIS.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return complaint;
 	}
 	
 	public <T> List<T> receiveListResponses(Class<T> clazz) {

@@ -1,15 +1,7 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-
-import controller.SessionFactoryBuilder;
-
 
 public class Query implements Serializable {
 	private static final long serialVersionUID = 8485189943949795110L;

@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import controller.Client;
 import model.Query;
 import model.Student;
+import model.Complaint;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -69,14 +70,9 @@ public class StudentDashboard {
 //		client.sendAction("getStudents");
 //		List<Student> stu = client.receiveListResponses(Student.class);
 //		for (Student student: stu) {
-//			System.out.println(stu);
+//			System.out.println(student);
 //		}
-//		Client client = new Client();
-//		client.sendAction("deleteQuery");
-//		client.sendID("14");
-//		Boolean qu = client.receiveResponse(Boolean.class);
-//		System.out.println(qu);
-		
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1238, 706);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

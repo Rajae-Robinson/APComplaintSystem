@@ -89,7 +89,7 @@ public class LoginScreen implements ActionListener {
 	        	 client.sendAction("authenticate");
 	        	client.authenticate(id, password);
 	        	// Receive auth response
-				isAuthenticated = client.receiveResponse(Boolean.class);
+				isAuthenticated = client.receiveAuthResp();
 	         } catch (IOException ex) {
 	             JOptionPane.showMessageDialog(loginFrame, ex.getMessage());
 	             return;
@@ -98,7 +98,7 @@ public class LoginScreen implements ActionListener {
 	         // Check if authentication succeeded
 	         if (isAuthenticated) {
 	             JOptionPane.showMessageDialog(loginFrame, "Login successful");
-	             StudentDashboard.main(null);;
+	             StudentDashboard.main(null);
 	             loginFrame.dispose(); // Close the login frame
 	         } else {
 	             JOptionPane.showMessageDialog(loginFrame, "Invalid id or password");
