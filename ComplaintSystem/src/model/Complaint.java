@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Date;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,9 @@ import controller.SessionFactoryBuilder;
 
 @Entity
 @Table(name = "complaint")
-public class Complaint {
+public class Complaint implements Serializable {
+	private static final long serialVersionUID = -8928497947145342486L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "complaintID")

@@ -6,7 +6,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import model.Complaint;
-import model.Login;
 import model.Query;
 import model.Student;
 
@@ -18,7 +17,6 @@ public class SessionFactoryBuilder {
 			if(sf == null) {
 				sf = new Configuration()
 						.configure("hibernate.cfg.xml")
-						.addAnnotatedClass(Login.class)
 						.addAnnotatedClass(Student.class)
 						.addAnnotatedClass(Complaint.class)
 						.addAnnotatedClass(Query.class)

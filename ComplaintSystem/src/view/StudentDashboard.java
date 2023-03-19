@@ -20,11 +20,17 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import controller.Client;
+import model.Query;
+import model.Student;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JEditorPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class StudentDashboard {
 
@@ -58,6 +64,19 @@ public class StudentDashboard {
 	}
 
 	private void initialize() {
+		// Test Server
+//		Client client = new Client();
+//		client.sendAction("getStudents");
+//		List<Student> stu = client.receiveListResponses(Student.class);
+//		for (Student student: stu) {
+//			System.out.println(stu);
+//		}
+//		Client client = new Client();
+//		client.sendAction("deleteQuery");
+//		client.sendID("14");
+//		Boolean qu = client.receiveResponse(Boolean.class);
+//		System.out.println(qu);
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1238, 706);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

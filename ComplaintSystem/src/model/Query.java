@@ -1,45 +1,25 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import controller.SessionFactoryBuilder;
 
-@Entity
-@Table(name = "query")
-public class Query {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "queryID")
+
+public class Query implements Serializable {
+	private static final long serialVersionUID = 8485189943949795110L;
+
 	private int queryID;
-	
-	@Column(name = "studentID")
     private int studentID;
-	
-	@Column(name = "category")
     private String category;
-	
-	@Column(name = "details")
     private String details;
-	
-	@Column(name = "responseDate")
     private Date responseDate;
-	
-	@Column(name = "responderID")
     private Integer responderID;
-	
-	@Column(name = "response")
     private String response;
 
 	
@@ -56,93 +36,6 @@ public class Query {
 		this.category = category;
 		this.details = details;
 	}
-
-	public void createQuery() {
-		Session session = null;
-		try {
-			session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-			session.beginTransaction();
-			
-	        session.save(this);
-	        session.getTransaction().commit();
-	    } catch (Exception e) {
-	        if (session.getTransaction() != null) {
-	        	session.getTransaction().rollback();
-	        }
-	        e.printStackTrace();
-	    } finally {
-	        if (session != null) {
-	            session.close();
-	        }
-	    }
-    }
-
-    public List<Query> readAll() throws HibernateException {
-    	Session session = null;
-		List<Query> queries = new ArrayList<>();
-		
-		try {
-            session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-            queries = session.createQuery("from Query", Query.class).getResultList();
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            if (session != null && session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-            throw e;
-        }
-		
-		return queries;
-	}
-    
-    public Query findQuery(int queryID) {
-    	Session session = null;
-        Query query = null;
-
-        try {
-        	session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-
-            query = session.get(Query.class, queryID);
-
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        
-        return query;
-    }
-    
-    public void deleteQuery(int queryID) {
-    	Session session = null;
-
-        try {
-        	session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-
-            Query query = session.get(Query.class, queryID);
-            session.delete(query);
-
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
 
 	public int getQueryID() {
 		return queryID;
