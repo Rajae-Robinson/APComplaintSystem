@@ -45,6 +45,7 @@ public class StudentDashboard {
 	private JTable table;
 	private JTextField searchtextField;
 	private JComboBox search_select_combobox;
+	private Client client = new Client();
 
 
 	public static void main(String[] args) {
@@ -72,6 +73,10 @@ public class StudentDashboard {
 //		for (Student student: stu) {
 //			System.out.println(student);
 //		}
+		
+		client.sendAction("findStudent");
+		client.sendID(LoginScreen.loginID);
+		Student stu = client.receiveStudent();
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1238, 706);
@@ -133,47 +138,55 @@ public class StudentDashboard {
 		
 		idtext = new JTextField();
 		idtext.setBounds(162, 31, 228, 24);
+		idtext.setText(LoginScreen.loginID);
 		panel_1.add(idtext);
 		idtext.setColumns(10);
 		
 		fnametext = new JTextField();
 		fnametext.setColumns(10);
 		fnametext.setBounds(162, 74, 228, 24);
+		fnametext.setText(stu.getFirstName());
 		panel_1.add(fnametext);
 		
 		lnametext = new JTextField();
 		lnametext.setColumns(10);
 		lnametext.setBounds(162, 117, 228, 24);
+		lnametext.setText(stu.getLastName());
 		panel_1.add(lnametext);
 		
 		emailtext = new JTextField();
 		emailtext.setColumns(10);
 		emailtext.setBounds(162, 161, 228, 24);
+		emailtext.setText(stu.getEmail());
 		panel_1.add(emailtext);
 		
 		contact_text = new JTextField();
 		contact_text.setColumns(10);
 		contact_text.setBounds(162, 208, 228, 24);
+		contact_text.setText(stu.getContactNumber());
 		panel_1.add(contact_text);
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(623, 145, 504, 266);
 		panel_1.add(textArea);
 		
-		JButton btnNewButton = new JButton("SUBMIT");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setBounds(840, 437, 119, 42);
-		panel_1.add(btnNewButton);
-		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Missing Grades", "Add/Drop module", "Fee Submission", "Financial Complaint", "Lecturer Issues", "Other"}));
 		comboBox.setBounds(698, 46, 298, 31);
 		panel_1.add(comboBox);
+		
+		JButton btnNewButton = new JButton("SUBMIT");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Complaint complaint = new Complaint(1, Integer.parseInt(LoginScreen.loginID), "missing grades", textArea.getText());
+				client.sendAction("createComplaint");
+				client.sendComplaint(complaint);
+			}
+		});
+		btnNewButton.setBounds(840, 437, 119, 42);
+		panel_1.add(btnNewButton);
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab(" VIEW COMPLAINTS ", null, panel_2, null);

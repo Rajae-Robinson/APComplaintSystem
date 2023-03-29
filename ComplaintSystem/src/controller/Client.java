@@ -61,6 +61,15 @@ public class Client {
 		}
 	}
 	
+	public void sendComplaint(Complaint complaint) {
+		try {
+			objOS.writeObject(complaint);
+			objOS.flush();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void sendID(String id) {
 		this.action = id;
 		try {
@@ -90,6 +99,18 @@ public class Client {
 			e.printStackTrace();
 		}
 		return authenticated;
+	}
+	
+	public Student receiveStudent() {
+		Student student = new Student();
+		try {
+			student = (Student) objIS.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return student;
 	}
 	
 	public Query receiveQuery() {

@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import controller.Client;
 
 public class LoginScreen implements ActionListener {
+	public static String loginID = "";
 	private JFrame loginFrame = new DefaultFrame();
 	private JButton loginButton;
 	private JTextField idField;
@@ -97,6 +98,7 @@ public class LoginScreen implements ActionListener {
 
 	         // Check if authentication succeeded
 	         if (isAuthenticated) {
+	        	 loginID =id;
 	             JOptionPane.showMessageDialog(loginFrame, "Login successful");
 	             StudentDashboard.main(null);
 	             loginFrame.dispose(); // Close the login frame
