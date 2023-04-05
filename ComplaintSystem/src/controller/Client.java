@@ -71,7 +71,15 @@ public class Client {
 	}
 	
 	public void sendID(String id) {
-		this.action = id;
+		try {
+			objOS.writeObject(id);
+			objOS.flush();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendID(int id) {
 		try {
 			objOS.writeObject(id);
 			objOS.flush();
@@ -137,6 +145,30 @@ public class Client {
 		return complaint;
 	}
 	
+	public List<Complaint> receiveComplaintList() {
+		List<Complaint> complaints = null;
+		try {
+			complaints = (List<Complaint>) objIS.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return complaints;
+	}
+	
+	public List<Query> receiveQueryList() {
+		List<Query> queries = null;
+		try {
+			queries = (List<Query>) objIS.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return queries;
+	}
+	
 	public <T> List<T> receiveListResponses(Class<T> clazz) {
 		try {
 			switch (action) {
@@ -162,8 +194,4 @@ public class Client {
 		}
 		return null;
 	}
-
-
-	
-	
 }
