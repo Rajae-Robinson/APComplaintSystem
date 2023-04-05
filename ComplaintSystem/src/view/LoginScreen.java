@@ -1,3 +1,6 @@
+/*
+ * Author: Sheneka Mitchell and Rajae Robinson
+ */
 package view;
 
 import java.awt.GridBagConstraints;

@@ -1,3 +1,6 @@
+/*
+ * Author: Sheneka Mitchell and Rajae Robinson
+ */
 package controller;
 
 import java.io.IOException;

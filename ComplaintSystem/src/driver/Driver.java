@@ -1,3 +1,6 @@
+/*
+ * Author: Sheneka Mitchell
+ */
 package driver;
 
 import view.LoginScreen;

@@ -1,3 +1,6 @@
+/*
+ * Author: Sheneka Mitchell
+ */
 package view;
 
 import java.awt.EventQueue;
@@ -253,7 +256,7 @@ public class StudentDashboard implements ActionListener {
 			Client client = new Client();
 			client.sendAction("getQueriesForStudent");
 			client.sendID(Integer.parseInt(LoginScreen.loginID));
-			queryList = client.receiveListResponses(Query.class);
+			queryList = client.receiveQueryList();
 		}
 		
 		String[] columnNames = {"Complaint ID", "Student ID", "Category", "Responder ID", "Response"};

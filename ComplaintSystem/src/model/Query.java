@@ -1,3 +1,6 @@
+/*
+ * Author: Sheneka Mitchell and Rajae Robinson
+ */
 package model;
 
 import java.io.Serializable;

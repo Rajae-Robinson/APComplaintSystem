@@ -1,3 +1,6 @@
+/*
+ * Author: Rajae Robinson
+ */
 package view;
 
 import javax.swing.ImageIcon;
