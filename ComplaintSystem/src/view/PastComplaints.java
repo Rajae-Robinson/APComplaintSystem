@@ -32,7 +32,7 @@ public class PastComplaints extends JPanel implements ActionListener {
     private JScrollPane scrollPane; 
     private JRadioButton complaintrdbtn; // declare instance variable
     private JRadioButton queryrdbtn; // declare instance variable
-    private String listOption = "";
+    private String listOption = "Complaint";
 
     public PastComplaints() {
         setLayout(null);
@@ -51,6 +51,7 @@ public class PastComplaints extends JPanel implements ActionListener {
         panel_5.add(lblNewLabel_2);
         
         complaintrdbtn = new JRadioButton("Complaint");
+        complaintrdbtn.setSelected(true); // Set complaint as selected by default
         complaintrdbtn.addItemListener(new ItemListener() {
         	public void itemStateChanged(ItemEvent e) {
         		  if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -77,9 +78,9 @@ public class PastComplaints extends JPanel implements ActionListener {
         queryrdbtn.setBounds(204, 24, 139, 21);
         panel_5.add(queryrdbtn);
         
-      //  JRadioButton group = new JRadioButton();
-       // group.add(complaintrdbtn);
-      //  group.add(queryrdbtn);
+//        JRadioButton group = new JRadioButton();
+//        group.add(complaintrdbtn);
+//        group.add(queryrdbtn);
 
         goButton = new JButton("Go");
         goButton.setBounds(602, 16, 119, 42);
@@ -87,27 +88,60 @@ public class PastComplaints extends JPanel implements ActionListener {
         goButton.setFont(new Font("Tahoma", Font.BOLD, 14));
         goButton.addActionListener(this);
         
-       // viewTable();
+        viewTable();
     }
 
     public void actionPerformed(ActionEvent e) {
         // Handle the search button click here
     	if (e.getSource()== goButton) {
+    		// get text from the search box (whatever id)
+    		// if there is no text call view table
     		viewTable();
+    		
+    		// If there is text do below
+    		// If complaint
+    		//client.sendAction("findComplaint");
+    		//client.sendID(textFromSearchField);
+    		// Complaint complaint = client.recieveComplaint();
+    		// showSearchResult(complaint);
+    		
+    		// If Query
+    		// client.sendAction("findQuery");
+    		// client.sendID(textFromSearchField);
+    		// Query query = client.recieveQuery();
+    		// showSearchResult(query);
     	}
     }
+    
+    private void showSearchResult(Complaint complaint) {
+    	 String[] columnNames = {"Complaint ID", "Student ID", "Category", "Responder ID", "Response Date", "Response"};
+         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
-    private void viewTable() {
-    /*    String listOption = "";
 
-        if (complaintrdbtn.isSelected()) {
-            listOption = "Complaint";
-        } else if (queryrdbtn.isSelected()) {
-            listOption = "Query";
-        }*/
-   
+         Object[] rowData = {complaint.getComplaintID(), complaint.getStudentID(), complaint.getCategory(), complaint.getResponderID(), complaint.getResponseDate(), complaint.getResponse()};
+         model.addRow(rowData);
+
+         table = new JTable(model);
+
+ 		scrollPane.setViewportView(table);
+    }
+    
+    private void showSearchResult(Query query) {
+   	 String[] columnNames = {"Query ID", "Student ID", "Category", "Responder ID", "Response Date", "Response"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        Object[] rowData = {query.getQueryID(), query.getStudentID(), query.getCategory(), query.getResponderID(), query.getResponseDate(), query.getResponse()};
+        model.addRow(rowData);
+
+        table = new JTable(model);
+
+		scrollPane.setViewportView(table);
+   }
+
+    private void viewTable() {   
         List<Complaint> complaintList = new ArrayList<Complaint>();
         List<Query> queryList = new ArrayList<Query>();
+        
         if(listOption.equals("Complaint")) {
             Client client = new Client();
             client.sendAction("getComplaintsForStudent");
@@ -115,26 +149,26 @@ public class PastComplaints extends JPanel implements ActionListener {
             complaintList = client.receiveComplaintList();
         }
 
-        else if(listOption.equals("Query")) {
+        if(listOption.equals("Query")) {
             Client client = new Client();
             client.sendAction("getQueriesForStudent");
             client.sendID(Integer.parseInt(LoginScreen.loginID));
             queryList = client.receiveQueryList();
         }
 
-        String[] columnNames = {"Complaint ID", "Student ID", "Category", "Responder ID", "Response"};
+        String[] columnNames = {"ID", "Student ID", "Category", "Responder ID", "Response Date", "Response"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         if(listOption == "Complaint") {
             for (Complaint complaint : complaintList) {
-                Object[] rowData = {complaint.getComplaintID(), complaint.getStudentID(), complaint.getCategory(), complaint.getResponderID(), complaint.getResponse()};
+                Object[] rowData = {complaint.getComplaintID(), complaint.getStudentID(), complaint.getCategory(), complaint.getResponderID(), complaint.getResponseDate(), complaint.getResponse()};
                 model.addRow(rowData);
             }
         }
 
         if(listOption == "Query") {
             for (Query query : queryList) {
-                Object[] rowData = {query.getQueryID(), query.getStudentID(), query.getCategory(), query.getResponderID(), query.getResponse()};
+                Object[] rowData = {query.getQueryID(), query.getStudentID(), query.getCategory(), query.getResponderID(), query.getResponseDate(), query.getResponse()};
                 model.addRow(rowData);
             }
         }
@@ -143,5 +177,5 @@ public class PastComplaints extends JPanel implements ActionListener {
         table = new JTable(model);
 
 		scrollPane.setViewportView(table);
-}
+    }
 }
