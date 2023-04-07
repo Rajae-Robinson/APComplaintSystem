@@ -73,6 +73,15 @@ public class Client {
 		}
 	}
 	
+	public void sendQuery(Query query) {
+		try {
+			objOS.writeObject(query);
+			objOS.flush();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void sendID(String id) {
 		try {
 			objOS.writeObject(id);

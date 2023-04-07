@@ -43,6 +43,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.ButtonGroup;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class StudentDashboard implements ActionListener {
 	private JFrame frame;
@@ -54,13 +57,19 @@ public class StudentDashboard implements ActionListener {
 	private JTextField contact_text;
 	private JComboBox<String> comboBox;
 	private JTextArea textArea;
-	private JButton btnNewButton;
+	private JButton submitbtn;
 	private JButton goButton;
 	private JTable table;
 	private JTextField searchtextField;
 	private JComboBox search_select_combobox;
 	private Client client = new Client();
 	protected Vector<?> rowData;
+	
+    private JRadioButton rdbtnQuery;
+    private JRadioButton rdbtnComplaint;
+    private String selectedType = "";
+    private String selectedOption = "";
+    private ButtonGroup radioGroup;
 
 
 	public static void main(String[] args) {
@@ -103,6 +112,7 @@ public class StudentDashboard implements ActionListener {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 119, 1204, 540);
 		frame.getContentPane().add(tabbedPane);
+
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab(" LODGE COMPLAINT ", null, panel_1, null);
@@ -110,12 +120,12 @@ public class StudentDashboard implements ActionListener {
 		
 		JLabel lbltype = new JLabel("Complaint/Query Type: ");
 		lbltype.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbltype.setBounds(531, 43, 169, 24);
+		lbltype.setBounds(529, 96, 169, 24);
 		panel_1.add(lbltype);
 		
 		JLabel lbladdcomplaint = new JLabel("Complaint:");
 		lbladdcomplaint.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbladdcomplaint.setBounds(531, 144, 119, 24);
+		lbladdcomplaint.setBounds(516, 178, 119, 24);
 		panel_1.add(lbladdcomplaint);
 		
 		JLabel idlbl = new JLabel("ID Number: ");
@@ -177,108 +187,69 @@ public class StudentDashboard implements ActionListener {
 		contact_text.setText(stu.getContactNumber());
 		contact_text.setEditable(false);
 		panel_1.add(contact_text);
+		
 				
 		textArea = new JTextArea();
-		textArea.setBounds(623, 145, 504, 266);
+		textArea.setBounds(623, 179, 504, 247);
 		panel_1.add(textArea);
 		
-		String[] options = {"","Missing Grades", "Add/Drop module", "Fee Submission", "Financial Complaint", "Lecturer Issues", "Other"};
+		String[] options = {"", "Missing Grades", "Add/Drop module", "Fee Submission", "Financial Complaint", "Lecturer Issues", "Other"};
 		comboBox = new JComboBox<String>(options);
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		comboBox.setBounds(698, 46, 298, 31);
-		panel_1.add(comboBox);	
+		comboBox.setBounds(709, 93, 298, 31);
+		panel_1.add(comboBox);
 		
-//		JRadioButton complaintRadioButton = new JRadioButton("Complaint");
-//		JRadioButton queryRadioButton = new JRadioButton("Query");
+		JRadioButton rdbtncomplaint = new JRadioButton("Complaint");
+		rdbtncomplaint.setFont(new Font("Tahoma", Font.BOLD, 14));
+		rdbtncomplaint.setBounds(656, 30, 103, 21);
+		panel_1.add(rdbtncomplaint);
 
-//		ButtonGroup buttonGroup = new ButtonGroup();
-//		buttonGroup.add(complaintRadioButton);
-//		buttonGroup.add(queryRadioButton);
-//		complaintRadioButton.setBounds(840, 437, 119, 42);
-//		queryRadioButton.setBounds(840, 437, 119, 42);
-//		panel_1.add(complaintRadioButton);
-//		panel_1.add(queryRadioButton);
+		JRadioButton rdbtnquery = new JRadioButton("Query");
+		rdbtnquery.setFont(new Font("Tahoma", Font.BOLD, 14));
+		rdbtnquery.setBounds(806, 30, 103, 21);
+		panel_1.add(rdbtnquery);
+
+		
+		//so only one can be selected at a time
+		radioGroup = new ButtonGroup();
+		radioGroup.add(rdbtnComplaint);
+		radioGroup.add(rdbtnQuery);
+		
+	    // Add an item listener to the radio buttons to detect when they are clicked
+	     rdbtnquery.addItemListener(new ItemListener() {
+	         public void itemStateChanged(ItemEvent e) {
+	             if (e.getStateChange() == ItemEvent.SELECTED) {
+	                 selectedType = "Query";
+	             }
+	         }
+	     });
+	     rdbtncomplaint.addItemListener(new ItemListener() {
+	         public void itemStateChanged(ItemEvent e) {
+	             if (e.getStateChange() == ItemEvent.SELECTED) {
+	            	
+	                 selectedType = "Complaint";
+	             }
+	         }
+	     });
+
 				
 		//SUBMIT BUTTON
-		btnNewButton = new JButton("SUBMIT");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton.addActionListener(this);
-		btnNewButton.setBounds(840, 437, 119, 42);
-		panel_1.add(btnNewButton);
+		submitbtn = new JButton("SUBMIT");
+		submitbtn.setFont(new Font("Tahoma", Font.BOLD, 14));
+		submitbtn.addActionListener(this);
+		submitbtn.setBounds(840, 437, 119, 42);
+		panel_1.add(submitbtn);
 		
-		
-			
-		//View Complaints Table
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab(" VIEW PAST COMPLAINTS/QUERIES ", null, panel_2, null);
 		panel_2.setLayout(null);
+
+	
+		PastComplaints pastCPanel = new PastComplaints();
+		pastCPanel.setBounds(0, 0, 1105, 550); // Set the bounds of the panel to fit inside panel_2
+		panel_2.add(pastCPanel);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 113, 1105, 390);
-		panel_2.add(scrollPane);
-		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBounds(36, 10, 1105, 68);
-		panel_2.add(panel_5);
-		panel_5.setLayout(null);
-		
-		JLabel lblNewLabel_2 = new JLabel();
-		lblNewLabel_2.setBounds(115, 36, 119, 13);
-		panel_5.add(lblNewLabel_2);
-		
-		search_select_combobox = new JComboBox();
-		search_select_combobox.setModel(new DefaultComboBoxModel(new String[] {"Complaint", "Query"})); //other categories can be added
-		search_select_combobox.setBounds(96, 27, 202, 30);
-		panel_5.add(search_select_combobox);
-		
-		searchtextField = new JTextField();
-		searchtextField.setBounds(354, 24, 431, 37);
-		panel_5.add(searchtextField);
-		searchtextField.setColumns(10);
-		
-		goButton = new JButton("Go");
-		goButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		goButton.addActionListener(this);
-		goButton.setBounds(840, 437, 119, 42);
-		panel_2.add(goButton);
-		
-		String listOption = search_select_combobox.getSelectedItem().toString();
-		List<Complaint> complaintList = new ArrayList<Complaint>();
-		List<Query> queryList = new ArrayList<Query>();
-		if(listOption.equalsIgnoreCase("Complaint")) {
-			Client client = new Client();
-			client.sendAction("getComplaintsForStudent");
-			client.sendID(Integer.parseInt(LoginScreen.loginID));
-			complaintList = client.receiveComplaintList();
-		}
-		
-		if(listOption.equalsIgnoreCase("Query")) {
-			Client client = new Client();
-			client.sendAction("getQueriesForStudent");
-			client.sendID(Integer.parseInt(LoginScreen.loginID));
-			queryList = client.receiveQueryList();
-		}
-		
-		String[] columnNames = {"Complaint ID", "Student ID", "Category", "Responder ID", "Response"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-		
-        if(listOption == "Complaint") {
-        	for (Complaint complaint : complaintList) {
-                Object[] rowData = {complaint.getComplaintID(), complaint.getStudentID(), complaint.getCategory(), complaint.getResponderID(), complaint.getResponse()};
-                model.addRow(rowData);
-            }
-		}
-		
-		if(listOption == "Query") {
-			for (Query query : queryList) {
-                Object[] rowData = {query.getQueryID(), query.getStudentID(), query.getCategory(), query.getResponderID(), query.getResponse()};
-                model.addRow(rowData);
-            }
-		}
-		
-		table = new JTable(model);
-		scrollPane.setViewportView(table);
-		
+	
 		// LIVE CHAT has to primarily deal with the TCP connect can be done after connection
 		
 		JPanel panel_4 = new JPanel();
@@ -293,12 +264,30 @@ public class StudentDashboard implements ActionListener {
 		tabbedPane.addTab("Frequently Asked Questions", null, panel_3, null);
 		panel_3.setLayout(null);
 	}
-	
+
 	@Override
+	
+	
 	public void actionPerformed(ActionEvent e) {
-	      if (e.getSource() == btnNewButton) {
+	      if (e.getSource() == submitbtn  ) {
+	    	  
+	    	         // Get the text from the complaint/feedback area
+	    	         selectedOption = textArea.getText();
+	    	         
+	    	         // Check that a type has been selected
+	    	         if (selectedType.equals("")) {
+	    	             JOptionPane.showMessageDialog(frame, "Please select a type (Complaint or Query)");
+	    	             return;
+	    	         }
+	    	         
+	    	         // Check that an option has been selected
+	    	         if (selectedOption.equals("")) {
+	    	             JOptionPane.showMessageDialog(frame, "Please enter your " + selectedType.toLowerCase());
+	    	             return;
+	    	         }
+
 	    	  String userOpt = comboBox.getSelectedItem().toString();
-	    	  if(!textArea.getText().trim().isEmpty() && !userOpt.isEmpty()) 
+	    	  if (selectedType.equals("Complaint"))
 				{
 	
 					Complaint complaint = new Complaint(1, Integer.parseInt(LoginScreen.loginID), userOpt, textArea.getText());
@@ -306,26 +295,25 @@ public class StudentDashboard implements ActionListener {
 					Client client = new Client();
 					client.sendAction("createComplaint");
 					client.sendComplaint(complaint);
-					
 						
-					JOptionPane.showMessageDialog(frame, "COMPLAINT/QUERY SUBMITED", "Confirmation", JOptionPane.INFORMATION_MESSAGE);				        					
+					JOptionPane.showMessageDialog(frame, "COMPLAINT SUBMITED Successfully!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);				        					
 					
 			    }
 			else {
-					JOptionPane.showMessageDialog(frame, "Please Enter All Data!", "Error", JOptionPane.ERROR_MESSAGE);
+				Query query = new Query(1, Integer.parseInt(LoginScreen.loginID), userOpt, textArea.getText());
+				
+				Client client = new Client();
+				client.sendAction("createQuery");
+	             client.sendQuery(query);
+	             JOptionPane.showMessageDialog(frame, "Query submitted successfully!");
+	        
 					
 			   }
-	      }
+	    	  textArea.setText(null);
+	    	  selectedType = "";
+
+	    	  userOpt = " ";
+	    	        }
 	      
-	      if (e.getSource() == goButton) {
-	    	String option = search_select_combobox.getSelectedItem().toString();
-	    	String id = searchtextField.getText();
-	    	if (option == "Complaint") {
-	    		client.sendAction("findComplaint");
-	    		client.sendID(id);
-				client.receiveComplaint();
-	    	}
-	  		
-	      }
 	}
 }
