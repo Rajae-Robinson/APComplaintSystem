@@ -17,7 +17,7 @@ public class FAQ extends JPanel {
 		lblNewLabel.setBounds(405, 28, 374, 52);
 		add(lblNewLabel);
 		
-		JTextArea textArea = new JTextArea("QUESTION 1: How can I reset moodle password?\n ANSWER: \n\n QUESTION 2: Where do I go when I have admission challenges?\r\n"
+		JTextArea textArea = new JTextArea("QUESTION 1: How can I reset moodle password?\n ANSWER: Contact tier1support@utech.edu.jm \n\n QUESTION 2: Where do I go when I have admission challenges?\r\n"
 				+ "ANSWER:Students who are having admission challenges should speak with one of the following\n the Student Affairs Assistant, their Advisor, and the Programme Director or visit\n the Admissions Department’s Lab.\r\n\n"
 				+ "QUESTION 3: What are the deadlines for the following?\r\n"
 				+ "ANSWER:\n i) Grade Forgiveness\r\n"

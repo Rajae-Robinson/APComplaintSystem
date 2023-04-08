@@ -245,9 +245,9 @@ public class StudentDashboard implements ActionListener {
 		panel_2.setLayout(null);
 
 	
-	    //PastComplaints pastCPanel = new PastComplaints();
-		//pastCPanel.setBounds(0, 0, 1105, 550); // Set the bounds of the panel to fit inside panel_2
-		//panel_2.add(pastCPanel);
+	    PastComplaints pastCPanel = new PastComplaints();
+		pastCPanel.setBounds(0, 0, 1105, 550); // Set the bounds of the panel to fit inside panel_2
+		panel_2.add(pastCPanel);
 		
 	
 		// LIVE CHAT has to primarily deal with the TCP connect can be done after connection

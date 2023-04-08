@@ -106,14 +106,14 @@ public class PastComplaints extends JPanel implements ActionListener {
                 	  Client client = new Client();
                 	  client.sendAction("findComplaint");
               		  client.sendID(searchText);
-              		 Complaint complaint = client.receiveComplaint();
+              		  Complaint complaint = client.receiveComplaint();
                 	  showSearchResult(complaint);
-                  } else {
-                      viewTable();
                   }
+              } else {
+                  viewTable();
               }
           }
-    	  }
+    }
       
     private void showSearchResult(Complaint complaint) {
     	 String[] columnNames = {"Complaint ID", "Student ID", "Category", "Responder ID", "Response Date", "Response"};
