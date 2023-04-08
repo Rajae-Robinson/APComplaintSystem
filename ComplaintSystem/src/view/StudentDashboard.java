@@ -115,7 +115,7 @@ public class StudentDashboard implements ActionListener {
 
 		
 		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab(" LODGE COMPLAINT ", null, panel_1, null);
+		tabbedPane.addTab("LODGE COMPLAINT/QUERY", null, panel_1, null);
 		panel_1.setLayout(null);
 		
 		JLabel lbltype = new JLabel("Complaint/Query Type: ");
@@ -193,7 +193,7 @@ public class StudentDashboard implements ActionListener {
 		textArea.setBounds(623, 179, 504, 247);
 		panel_1.add(textArea);
 		
-		String[] options = {"", "Missing Grades", "Add/Drop module", "Fee Submission", "Financial Complaint", "Lecturer Issues", "Other"};
+		String[] options = {"", "Missing Grades", "Add/Drop module", "Fee Submission", "Financial Assistance ", "Lecturer Issues", "Grade Forgiveness", "Other"};
 		comboBox = new JComboBox<String>(options);
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		comboBox.setBounds(709, 93, 298, 31);
@@ -245,9 +245,9 @@ public class StudentDashboard implements ActionListener {
 		panel_2.setLayout(null);
 
 	
-		PastComplaints pastCPanel = new PastComplaints();
-		pastCPanel.setBounds(0, 0, 1105, 550); // Set the bounds of the panel to fit inside panel_2
-		panel_2.add(pastCPanel);
+	    //PastComplaints pastCPanel = new PastComplaints();
+		//pastCPanel.setBounds(0, 0, 1105, 550); // Set the bounds of the panel to fit inside panel_2
+		//panel_2.add(pastCPanel);
 		
 	
 		// LIVE CHAT has to primarily deal with the TCP connect can be done after connection
@@ -256,6 +256,10 @@ public class StudentDashboard implements ActionListener {
 		tabbedPane.addTab(" LIVE CHAT ", null, panel_4, null);
 		panel_4.setLayout(null);
 		
+		LiveChat livechat = new LiveChat();
+		livechat.setBounds(0, 0, 1105, 550); // Set the bounds of the panel to fit inside panel_2
+		panel_4.add(livechat);
+		
 		JPanel panel_6 = new JPanel();
 		tabbedPane.addTab(" LIVE VIDEO", null, panel_6, null);
 		panel_6.setLayout(null);
@@ -263,6 +267,10 @@ public class StudentDashboard implements ActionListener {
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Frequently Asked Questions", null, panel_3, null);
 		panel_3.setLayout(null);
+		
+		FAQ fqa = new FAQ();
+		fqa.setBounds(0, 0, 1105, 550); // Set the bounds of the panel to fit inside panel_2
+		panel_3.add(fqa);
 	}
 
 	@Override
